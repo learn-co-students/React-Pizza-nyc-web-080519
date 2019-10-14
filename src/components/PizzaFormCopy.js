@@ -1,11 +1,10 @@
 import React from "react"
 
-class PizzaForm extends React.Component {
+class PizzaFormCopy extends React.Component {
   // adding state in this component to handle the onChange from the form inputs so that the entire app doesn't re-render by having the onChange setState in App
   // upon submit, will pass these state values up to app to set the state of the object and then send the patch request
 
   // ????????? ask Tashawn about deriving state from props in this case since it's an edit form
-  // should you be able to edit form without having sent a pizza from props
 
   state= {
     topping: null,
@@ -46,8 +45,6 @@ class PizzaForm extends React.Component {
     }
 
     this.props.handleSubmit(editedPizzaObj)
-    
-    //reset component state
     this.setState({
       topping: null,
       size: "",
@@ -77,6 +74,7 @@ class PizzaForm extends React.Component {
     
   }
 
+  // ?????????????????? Ask Tashawn about not being able to totally backspace through the topping value bc of the ternary setting the value
 
   render() {
     console.log("form state =", this.state)
@@ -117,4 +115,4 @@ class PizzaForm extends React.Component {
   }
 }
 
-export default PizzaForm
+export default PizzaFormCopy
