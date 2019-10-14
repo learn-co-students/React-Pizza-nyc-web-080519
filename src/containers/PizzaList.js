@@ -3,6 +3,8 @@ import Pizza from '../components/Pizza'
 class PizzaList extends Component {
 
   render() {
+  let pizza = this.props.allPizzas.map(pizza => {return <Pizza key={pizza.id} pizza={pizza} sendToPizzaForm={this.props.sendToPizzaForm} />})
+    
     return (
       <table className="table table-striped">
         <thead>
@@ -14,9 +16,7 @@ class PizzaList extends Component {
           </tr>
         </thead>
         <tbody>
-          {
-            //render Pizza here
-          }
+          { pizza }
         </tbody>
       </table>
     );
