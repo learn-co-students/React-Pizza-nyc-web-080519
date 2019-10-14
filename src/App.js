@@ -4,8 +4,6 @@ import PizzaForm from './components/PizzaForm'
 import PizzaList from './containers/PizzaList'
 // import { throws } from 'assert';
 
-
-//should we have passed onChange values up to editPizza and set state here in App vs keeping state on PizzaForm and then only passing it upon submit???
 class App extends Component {
   state = {
     pizzas: [],
@@ -36,6 +34,7 @@ class App extends Component {
     })
   }
 
+  //need to set state to pass the pizzaObj to the form otherwise the page won't rerender and props won't update
   handleEditButton = (pizzaObj) => {
     this.setState({editPizza: pizzaObj})
   }
