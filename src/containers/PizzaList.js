@@ -11,9 +11,14 @@ class PizzaList extends Component {
       admin: !this.state.admin
     })
   }
+  
+  deletePizza = (obj) => {
+    this.props.deletePizza(obj)
+    this.setAdmin()
+  }
 
   render() {
-  let pizza = this.props.allPizzas.map(pizza => {return <Pizza key={pizza.id} pizza={pizza} admin={this.state.admin} sendToPizzaForm={this.props.sendToPizzaForm} deletePizza={this.props.deletePizza} />})
+  let pizza = this.props.allPizzas.map(pizza => {return <Pizza key={pizza.id} pizza={pizza} admin={this.state.admin} sendToPizzaForm={this.props.sendToPizzaForm} deletePizza={this.deletePizza} />})
     
     return (
       <div >
