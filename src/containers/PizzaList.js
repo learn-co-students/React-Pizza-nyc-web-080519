@@ -2,10 +2,22 @@ import React, { Component } from 'react';
 import Pizza from '../components/Pizza'
 class PizzaList extends Component {
 
+  state = {
+    admin: false
+  }
+
+  setAdmin = () => {
+    this.setState({
+      admin: !this.state.admin
+    })
+  }
+
   render() {
-  let pizza = this.props.allPizzas.map(pizza => {return <Pizza key={pizza.id} pizza={pizza} sendToPizzaForm={this.props.sendToPizzaForm} />})
+  let pizza = this.props.allPizzas.map(pizza => {return <Pizza key={pizza.id} pizza={pizza} admin={this.state.admin} sendToPizzaForm={this.props.sendToPizzaForm} deletePizza={this.props.deletePizza} />})
     
     return (
+      <div >
+        <div id="admin" onClick={this.setAdmin}>admin</div>
       <table className="table table-striped">
         <thead>
           <tr>
@@ -19,6 +31,7 @@ class PizzaList extends Component {
           { pizza }
         </tbody>
       </table>
+      </div>
     );
   }
 

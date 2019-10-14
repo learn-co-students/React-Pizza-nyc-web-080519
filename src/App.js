@@ -6,7 +6,7 @@ class App extends Component {
 
   state = {
     allPizzas: [],
-    objInForm: {},
+    objInForm: {id: "", topping: "", size: "", vegetarian: null },
   }
 
   componentDidMount() {
@@ -45,7 +45,7 @@ class App extends Component {
       })
     } else if ( type === "veg") {
       let newObj = {...this.state.objInForm}
-      newObj.vegetarian = !newObj.vegetarian
+      newObj.vegetarian = (newObj.vegetarian) ? false : true 
       this.setState({
         objInForm: {...newObj} 
       })
@@ -54,12 +54,13 @@ class App extends Component {
   }
 
   clearForm = () => {
+    let newObj = {id: "", topping: "", size: "", vegetarian: null }
     this.setState({
-      objInForm: {}
+      objInForm: newObj
     })
   }
   
-  submitForm = () => {
+  submitEditForm = () => {
     let newAllPizzasArr = [...this.state.allPizzas]
     let objToChange = newAllPizzasArr.find(pizza => { return pizza.id === this.state.objInForm.id})
     // debugger
@@ -83,18 +84,46 @@ class App extends Component {
         objToChange
         )
       })
-      .then( this.clearForm() )
-      
+      .then( this.clearForm())
+  }
 
+  submitCreateItemForm= () => {
+    fetch(" http://localhost:3000/pizzas/", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        accepts: "application/json"
+      },
+      body: JSON.stringify(
+        this.state.objInForm
+        )
+      })
+      .then(resp => resp.json())
+      .then( data => {
+        let newAllPizzasArr = [...this.state.allPizzas, data]
+        this.setState({
+          allPizzas: newAllPizzasArr
+        })
+      })
+      .then( this.clearForm())
+  }
+
+  deletePizza = (obj) => {
+    let newArr = this.state.allPizzas.filter(pizza => pizza.id !== obj.id)
+    console.log("new arr same as statearr?", newArr === this.state.allPizzas)
+    this.setState({
+      allPizzas: newArr
+    })
+    fetch(" http://localhost:3000/pizzas/" + obj.id, {
+      method: "DELETE"})  
   }
   
   render() {
-    console.log("RENDER vegetarian newobj: ", this.state.objInForm )
     return (
       <Fragment>
         <Header/>
-        <PizzaForm  objInForm={this.state.objInForm} editInForm={this.editInForm} submitForm={this.submitForm}/>
-        <PizzaList allPizzas={this.state.allPizzas} sendToPizzaForm={this.sendToPizzaForm}  />
+        <PizzaForm  objInForm={this.state.objInForm} editInForm={this.editInForm} submitEditForm={this.submitEditForm} submitCreateItemForm={this.submitCreateItemForm} />
+        <PizzaList allPizzas={this.state.allPizzas} sendToPizzaForm={this.sendToPizzaForm}  deletePizza={this.deletePizza} />
       </Fragment>
     );
   }

@@ -2,8 +2,8 @@
   "pizzas": [
     {
       "id": 1,
-      "topping": "Plain OL",
-      "size": "Large",
+      "topping": "Plain Ol Cheese",
+      "size": "Small",
       "vegetarian": true
     },
     {
@@ -58,6 +58,24 @@
       "id": 10,
       "topping": "Chicken",
       "size": "Large",
+      "vegetarian": true
+    },
+    {
+      "topping": "New Pie",
+      "size": "Medium",
+      "id": 11,
+      "vegetarian": true
+    },
+    {
+      "id": 12,
+      "topping": "This iis new",
+      "size": "Medium",
+      "vegetarian": null
+    },
+    {
+      "id": 13,
+      "topping": "new oue 2",
+      "size": "Small",
       "vegetarian": true
     }
   ]
