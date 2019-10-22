@@ -1,14 +1,10 @@
 import React from "react"
 
-class PizzaForm extends React.Component {
+class PizzaFormCopy extends React.Component {
   // adding state in this component to handle the onChange from the form inputs so that the entire app doesn't re-render by having the onChange setState in App
   // upon submit, will pass these state values up to app to set the state of the object and then send the patch request
 
   // ????????? ask Tashawn about deriving state from props in this case since it's an edit form
-  // A: still have the problem of not being able to set state immediately when the prop is brought in without calling setState, 
-  // so the conditionals I wrote would still be necessary to check to see if any change was made to component state or not
-  
-  // should you be able to edit form without having sent a pizza from props??
 
   state= {
     topping: null,
@@ -17,8 +13,11 @@ class PizzaForm extends React.Component {
   }
 
   //on page load, Not Vegetarian checked should be true (checked), vegetarian should be false (unchecked)
-  //once prop is passed in, Vegetarian or Not needs to be checked according to prop
-  //if this.state.vegetarian is different than this.props.pizza.vegetarian, it should update
+  //once prop is passed in, it needs to be checked according to prop
+  //if this.state.vegetarian is different than this.props.pizza.vegetarian, it should toggle
+
+  //also the submit button is a simple button and not a submit input on a form, so we won't be able to send the event to app and will have to pass all the arguments
+
   isVegetarian = () => {
     if (!this.props.pizza) {
       return false
@@ -28,19 +27,16 @@ class PizzaForm extends React.Component {
       return this.state.vegetarian
     }
   }
-  
-  //also the submit button is a simple button and not a submit input on a form, so we won't be able to send the event to app and will have to pass all the arguments
+
   handleSubmitClick = () => {
     let id = this.props.pizza.id;
     let topping;
     let size;
     let vegetarian;
-    //checks to see if anything was changed by looking for updates to state, if nothing in state, take the value from the props
     this.state.topping ? topping = this.state.topping : topping = this.props.pizza.topping;
     this.state.size ? size = this.state.size : size = this.props.pizza.size;
     this.state.vegetarian !== null ? vegetarian = this.state.vegetarian : vegetarian = this.props.pizza.vegatarian;
     
-    // make an object to send so you can also use this object in the PATCH fetch
     let editedPizzaObj = {
       id: id,
       topping: topping,
@@ -49,8 +45,6 @@ class PizzaForm extends React.Component {
     }
 
     this.props.handleSubmit(editedPizzaObj)
-
-    //reset component state after submit
     this.setState({
       topping: null,
       size: "",
@@ -80,7 +74,8 @@ class PizzaForm extends React.Component {
     
   }
 
-  //conditional rendering in input values check to see if anything in the component state has been changed (via the onChange handler). If yes, render what's in state, else render what's in props
+  // ?????????????????? Ask Tashawn about not being able to totally backspace through the topping value bc of the ternary setting the value
+
   render() {
     console.log("form state =", this.state)
     return(
@@ -120,4 +115,4 @@ class PizzaForm extends React.Component {
   }
 }
 
-export default PizzaForm
+export default PizzaFormCopy
